@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="queries">
+
+    <div class="starter-template panel" th:each="query : ${pager.posts}">
+        <div class="panel-heading">
+            <h1><a th:text="${query.title}" th:href="@{'/query/' + ${query.id}}">Title</a></h1>
+            <div th:text="'Created: ' + ${#dates.format(query.createDate, 'dd-MMM-yyyy')}">
+                Created at
+            </div>
+        </div>
+        <h3 class="panel-body" th:text="${query.body}">Body</h3>
+        <br></br>
+    </div>
+
+</div>
+</body>
+</html>

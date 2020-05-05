@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+
+    <!--Post-->
+    <div class="jumbotron">
+
+        <h1 th:text="${query.title}">Title</h1>
+        <div th:text="'Created: ' + ${#dates.format(query.createDate, 'dd-MMM-yyyy')}">Created at</div>
+        <h3 th:text="${query.body}">Body</h3>
+
+        <!--Only show these buttons if the user is the owner of post-->
+        <div class="row">
+            <a th:href="@{'/editQuery/{id}'(id=${query.id})}" class="col-md-2">
+                <button type="button" class="btn btn-primary btn-block" th:text="Edit">Edit</button>
+            </a>
+
+        </div>
+    </div>
+
+    <h2>Replies:</h2>
+
+    <!--Replies-->
+    <div class="well" th:each="post : ${query.posts}">
+        <a th:href="@{'/post/{id}'(id=${post.id})}">
+            <h3 style="text-overflow:ellipsis;" th:text="${post.body}">Body</h3>
+        </a>
+        <div th:text="'Created: ' + ${#dates.format(post.createDate, 'dd-MMM-yyyy')}">
+            Created at
+        </div>
+    </div>
+
+    <div class="row">
+        <a th:href="@{'/editPost/{id}'(id=${query.id})}" class="col-md-2">
+            <button type="button" class="btn btn-primary btn-block" th:text="Post">Post</button>
+        </a>
+    </div>
+
+
+    
+
+</div>
+<!-- /.container -->
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

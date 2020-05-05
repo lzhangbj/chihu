@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+
+    <!--Post-->
+    <div class="jumbotron">
+
+        <h3 th:text="${post.body}">Body</h3>
+        <div th:text="'Created: ' + ${#dates.format(post.createDate, 'dd-MMM-yyyy')}">Created at</div>
+
+        <!--Only show these buttons if the user is the owner of post-->
+        <div class="row">
+            <a th:href="@{'/editPost/{id}'(id=${post.query.id})}" class="col-md-2">
+                <button type="button" class="btn btn-primary btn-block" th:text="Edit">Edit</button>
+            </a>
+
+        </div>
+    </div>
+
+    <h2>Comments:</h2>
+
+    <!--Comments-->
+    <div class="well" th:each="comment : ${post.comments}">
+        <h3 th:text="${comment.body}">Body</h3>
+        <div th:text="'Created: ' + ${#dates.format(comment.createDate, 'dd-MMM-yyyy')}">
+            Created at
+        </div>
+        <!-- <div>
+            <a th:action="@{'/post/{id}'(id=${post.id})}" th:method="delete">delete</a>
+        </div> -->
+    </div>
+
+    <!--Leave a comment button-->
+    <!--Only if authenticated-->
+    <div class="row">
+        <a th:href="@{'/newComment/{id}'(id=${post.id})}" class="col-md-2">
+            <button type="button" class="btn btn-primary btn-block" th:text="Comment">Comment</button>
+        </a>
+    </div>
+</div>
+<!-- /.container -->
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>
